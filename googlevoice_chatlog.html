@@ -1,0 +1,48 @@
+<!-- The language is html, but it's not a web page. It's a chat log.
+The chat log is a series of messages, each of which is a series of lines, displayed in the order they were sent, in the style of MSN Messenger. -->
+<!-- The first line of each message is the sender's name, followed by a colon. -->
+<!-- The second line of each message is the time the message was sent, in the format "HH:MM:SS AM/PM". -->
+<!-- The third line of each message is the date the message was sent, in the format "MM/DD/YYYY". -->
+<!-- The fourth line of each message is the message itself. -->
+<!-- The fifth line of each message is a blank line. -->
+
+<!-- The first line of the file is the name of the person who sent the first message. -->
+
+<!-- This code converts google takeout data from googlevoice.json that was generated earlier into a chat log. -->
+
+<!-- The code is written in JavaScript. 
+The file "googlevoice.json" is then used by the extension to create the file "googlevoice.js"
+Which is the used to create the file "googlevoice.html", to display the Google Voice chat history in a browser -->
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Google Voice</title>
+</head>
+<body>
+<div id="chatlog">
+
+<!-- Path: googlevoice_chatlog.html -->
+<!-- open googlevoice.json, parse it, and output it as HTML -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $.getJSON("googlevoice.json", function(data) {
+        $.each(data, function(key, val) {
+            var html = "";
+            html += "<div class='message'>";
+            html += "<div class='date'>" + val.date + "</div>";
+            html += "<div class='time'>" + val.time + "</div>";
+            html += "<div class='name'>" + val.name + "</div>";
+            html += "<div class='number'>" + val.number + "</div>";
+            html += "<div class='text'>" + val.text + "</div>";
+            html += "</div>";
+            $("#chatlog").append(html);
+        });
+    });
+});
+</script>
+</body>
+</html>
+
